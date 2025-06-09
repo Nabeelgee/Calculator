@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nabeel Calculator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffafbd, #ffc3a0, #a18cd1, #fbc2eb, #8ec5fc, #e0c3fc);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .calculator {
+      width: 340px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: #0077b6;
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    .history-btn {
+      font-size: 0.6em;
+      padding: 6px 12px;
+      background: white;
+      color: #0077b6;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: normal;
+    }
+
+    .display {
+      background: #1e1e1e;
+      color: #00ffcc;
+      font-size: 2.2em;
+      padding: 25px;
+      text-align: right;
+      word-wrap: break-word;
+      min-height: 60px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 20px;
+    }
+
+    button {
+      height: 60px;
+      font-size: 1.3em;
+      border: none;
+      border-radius: 15px;
+      background: #f0f0f0;
+      color: #333;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+      cursor: pointer;
+    }
+
+    button:active {
+      background: #ddd;
+      transform: scale(0.98);
+    }
+
+    .operator {
+      background: #ffb84d;
+      color: #fff;
+    }
+
+    .equal {
+      background: #00bcd4;
+      color: white;
+    }
+
+    .clear {
+      background: #e91e63;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <div class="header">
+      Nabeel Calculator
+      <button class="history-btn" onclick="showHistory()">History</button>
+    </div>
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="append('%')">%</button>
+      <button class="operator" onclick="append('/')">÷</button>
+      <button class="operator" onclick="append('*')">×</button>
+
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button class="operator" onclick="append('-')">−</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button class="operator" onclick="append('+')">+</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button class="equal" onclick="calculate()">=</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button onclick="append('(')">(</button>
+      <button onclick="append(')')">)</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    const history = [];
+
+    function append(value) {
+      if (display.innerText === '0' || display.innerText === 'Error') {
+        display.innerText = value;
+      } else {
+        display.innerText += value;
+      }
+    }
+
+    function clearDisplay() {
+      display.innerText = '0';
+    }
+
+    function calculate() {
+      try {
+        const expression = display.innerText.replace('÷', '/').replace('×', '*');
+        const result = eval(expression);
+        history.push(`${display.innerText} = ${result}`);
+        display.innerText = result;
+      } catch {
+        display.innerText = 'Error';
+      }
+    }
+
+    function showHistory() {
+      alert(history.length ? history.join('\n') : 'No history yet.');
+    }
+  </script>
+
+</body>
+</html>
