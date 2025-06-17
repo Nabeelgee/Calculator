@@ -1,1 +1,2 @@
-https://github.com/Nabeelgee/Calculator
+
+https://nabeelgee.github.io/Calculator/
